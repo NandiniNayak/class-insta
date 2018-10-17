@@ -6,22 +6,27 @@
     <div class="col-md-4">
        <!-- if current user is already following -->
        <div class="card">
-         <!-- if the user has the profile created already only then allow to follow those profiles -->
-         <% if user.profile %>
          <!-- only the users who are not a current user  -->
-          <% if user.profile.picture %>
            <%= image_tag(user.profile.picture_url, class: "profile-follow-pic") %>
-          <% end %>
            <span class="follow-profile-name"><%= user.profile.name %></span>
+           <br>
            <!-- if user.followings is an empty array, provide a link to follow -->
-           <!-- check if the user is already been followed by current user, by parsings throught he array of users followers -->
-            <% if user.followers.include?(current_user) %>
-               <!-- instead of following_id, pass user as a follower id to the destroy method -->
-               <%= link_to 'unfollow', following_path(user), method: :delete, class: "btn btn-danger follow" %></li>
-            <% else %>
+           <% if current_user.followings == Array.new %>
              <%= link_to 'follow', followings_path(:follower_id => user), method: :post, class: "btn btn-primary follow"%>
-            <% end %>
+           <% else %>
+              <!-- loop through user followings -->
+              <!-- problem, for each of the following of the user, it would list out a link follow or unfollow -->
+              solution link is needed only if the
+             <% current_user.followings.each do |following| %>
+                <!-- check if current user is already following a profile , give a link to unfollow-->
+                <% if user == following.followee %>
+                  <%= link_to 'unfollow', following, method: :delete, class: "btn btn-danger follow" %>
+                <% else %>
+                  <%= link_to 'follow', followings_path(:follower_id => user), method: :post, class: "btn btn-primary follow"%>
+                <% end %>
+             <% end %>
           <% end %>
+
        </div>
     </div>
     <% end %>
