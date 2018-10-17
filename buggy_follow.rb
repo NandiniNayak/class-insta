@@ -16,11 +16,11 @@
            <% else %>
               <!-- loop through user followings -->
               <!-- problem, for each of the following of the user, it would list out a link follow or unfollow -->
-              solution link is needed only if the
+              # solution link is needed only if the
              <% current_user.followings.each do |following| %>
                 <!-- check if current user is already following a profile , give a link to unfollow-->
                 <% if user == following.followee %>
-                  <%= link_to 'unfollow', following, method: :delete, class: "btn btn-danger follow" %>
+                  <%= link_to 'unfollow', following_path(user), method: :delete, class: "btn btn-danger follow" %>
                 <% else %>
                   <%= link_to 'follow', followings_path(:follower_id => user), method: :post, class: "btn btn-primary follow"%>
                 <% end %>
